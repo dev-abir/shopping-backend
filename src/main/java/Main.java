@@ -7,7 +7,7 @@ import spark.Spark;
 public class Main {
 	public static void main(String[] args) {
 
-		Spark.port(4567);
+		Spark.port(getHerokuAssignedPort());
 
 		Spark.staticFileLocation("/");
 
@@ -18,5 +18,13 @@ public class Main {
 		});
 
 		new ProductController(new ProductService());
+	}
+
+	private static int getHerokuAssignedPort() {
+		String herokuPort = System.getenv("PORT");
+		if (herokuPort != null) {
+			return Integer.parseInt(herokuPort);
+		}
+		return 4567;
 	}
 }
