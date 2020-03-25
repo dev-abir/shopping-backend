@@ -31,7 +31,7 @@ public class ProductService {
 	 *         9(If the database dosen't have enough products, let's say the system
 	 *         has 5 products, and limit = 10, offset = 1, then it will return
 	 *         products from ID 1 to ID 4, then a message stating
-	 *         <code>not enough number....</code>)
+	 *         <code>Database limit exceeded</code>)
 	 * 
 	 */
 	public static Object[] getProducts(int limit, int offset) {
