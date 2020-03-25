@@ -11,41 +11,43 @@ import utils.HTMLstatusCodes;
 
 public class ProductController {
 
-	public static final int NUMBER_OF_PRODUCTS_FOR_EACH_CALL = 9;
-	public static final int MAX_PRODUCTS_FOR_EACH_CALL = 100;
-
 	public ProductController(final ProductService productService) {
 
-		Spark.get("api/getMoreProducts", new Route() {
+		Spark.get("api/getAllProducts", new Route() {
 			@Override
 			public Object handle(Request request, Response response) {
 				response.type("application/json");
-				return ProductService.getMoreProducts(NUMBER_OF_PRODUCTS_FOR_EACH_CALL);
+				return ProductService.getAllProoducts();
 			}
 		}, JsonUtil::toJson);
 		
-		
-		Spark.get("api/getMoreProducts/:quantity", new Route() {
+		Spark.get("api/getProducts", new Route() {
 			@Override
 			public Object handle(Request request, Response response) {
 				response.type("application/json");
-				int quantity = 0;
+				int limit, offset;
 				try {
-					quantity = Integer.parseInt(request.params(":quantity"));
-				} catch (NumberFormatException e) {
+					limit = checkParamInt(request.queryParams("limit"));
+					offset = checkParamInt(request.queryParams("offset"));
+				} catch (Exception e) {
 					response.status(HTMLstatusCodes.STATUS_GENERIC_ERROR);
-					return new Error("Quantity parameter must be a positive integer within " + MAX_PRODUCTS_FOR_EACH_CALL);
+					return new Error(e.getMessage());
 				}
-				if (quantity < 0) {
-					response.status(HTMLstatusCodes.STATUS_GENERIC_ERROR);
-					return new Error("Invalid quantity! It must be a positive integer within " + MAX_PRODUCTS_FOR_EACH_CALL);
-				} else if (quantity > MAX_PRODUCTS_FOR_EACH_CALL) {
-					response.status(HTMLstatusCodes.STATUS_GENERIC_ERROR);
-					return new Error("Quantity parameter must be a positive integer within " + MAX_PRODUCTS_FOR_EACH_CALL);
-				} else {
-					return ProductService.getMoreProducts(quantity);
-				}
+				return ProductService.getProducts(limit, offset);
 			}
 		}, JsonUtil::toJson);
+	}
+	
+	private int checkParamInt(String queryParam) throws Exception {
+		int result;
+		try {
+			result = Integer.parseInt(queryParam);
+		} catch (NumberFormatException e) {
+			throw new Exception("Query parameter must be a positive integer");
+		}
+		if (result < 0) {
+			throw new Exception("Invalid query parameter! It must be a positive integer");
+		}
+		return result;
 	}
 }

@@ -64,5 +64,5 @@ fruits = [
 
 file = open("dat", "w")
 for i in range(60):
-	file.write("new Product({}, {}{}, {}, {}),\n".format("\"" + fruits[i] + "\"", 10.0, "d", "\"" + str(i + 1) + "This is a fruit." + "\"", "\"" + fruits[i] + ".jpg" + "\""))
+	file.write("new Product({}, {}, {}{}, {}, {}),\n".format(str(i), "\"" + fruits[i] + "\"", 10.0, "d", "\"" + str(i) + "This is a fruit." + "\"", "\"" + fruits[i] + ".jpg" + "\""))
 file.close()

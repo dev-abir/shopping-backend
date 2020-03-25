@@ -1,17 +1,22 @@
 package product;
 
 public class Product {
-	private String name;
-	private double price;
-	private String description;
-	private String ImagePath;
+	private final int ID;
+	private final String name;
+	private final double price;
+	private final String description;
+	private final String ImagePath;
 
-	public Product(String name, double price, String description, String imagePath) {
-		super();
+	public Product(int ID, String name, double price, String description, String imagePath) {
+		this.ID = ID;
 		this.name = name;
 		this.price = price;
 		this.description = description;
 		ImagePath = imagePath;
+	}
+	
+	public int getID() {
+		return ID;
 	}
 
 	public String getName() {
@@ -32,7 +37,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [name=" + name + ", price=" + price + ", description=" + description + ", ImagePath="
+		return "Product [ID=" + ID + ", name=" + name + ", price=" + price + ", description=" + description + ", ImagePath="
 				+ ImagePath + "]";
 	}
 }
