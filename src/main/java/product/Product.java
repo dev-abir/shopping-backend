@@ -14,7 +14,7 @@ public class Product {
 		this.description = description;
 		ImagePath = imagePath;
 	}
-	
+
 	public int getID() {
 		return ID;
 	}
@@ -37,7 +37,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [ID=" + ID + ", name=" + name + ", price=" + price + ", description=" + description + ", ImagePath="
-				+ ImagePath + "]";
+		return "Product [ID=" + ID + ", name=" + name + ", price=" + price + ", description=" + description
+				+ ", ImagePath=" + ImagePath + "]";
 	}
 }

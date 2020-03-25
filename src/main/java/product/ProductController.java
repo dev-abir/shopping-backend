@@ -20,7 +20,7 @@ public class ProductController {
 				return ProductService.getAllProoducts();
 			}
 		}, JsonUtil::toJson);
-		
+
 		Spark.get("api/getProducts", new Route() {
 			@Override
 			public Object handle(Request request, Response response) {
@@ -37,7 +37,7 @@ public class ProductController {
 			}
 		}, JsonUtil::toJson);
 	}
-	
+
 	private int checkParamInt(String queryParam) throws Exception {
 		int result;
 		try {
