@@ -12,7 +12,7 @@ public class ProductService {
 	 * 
 	 * @return an array of products containing all products
 	 */
-	public static Product[] getAllProoducts() {
+	public Product[] getAllProoducts() {
 		return DatabaseController.products;
 	}
 
@@ -34,7 +34,7 @@ public class ProductService {
 	 *         <code>Database limit exceeded</code>)
 	 * 
 	 */
-	public static Object[] getProducts(int limit, int offset) {
+	public Object[] getProducts(int limit, int offset) {
 		ArrayList<Object> productsAndError = new ArrayList<>(); // Is it the right way? (i.e., to send an object array
 																// containing products as well as an error)
 		for (int i = offset; i <= (offset + (limit - 1)); i++) {

@@ -1,6 +1,10 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import product.Product;
+import user.User;
 
 public class DatabaseController {
 
@@ -73,6 +77,22 @@ public class DatabaseController {
 			new Product(58, "Peach", 10.0d, "58This is a fruit.", "Peach.jpg"),
 			new Product(59, "Pear", 10.0d, "59This is a fruit.", "Pear.jpg") };
 
+	private static User[] arr = { new User("bogola", "bogopogo@mail.me", false),
+			new User("adu", "dda@gmail.com", false) };
+
+	public static ArrayList<User> users = new ArrayList<User>(Arrays.asList(arr));
+
+	public static Product getProductByID(int productID) {
+		return products[productID];
+	}
+
+	public static void addUser(User user) throws Exception {
+		// may use set instead of arraylist
+		if (users.contains(user)) {
+			throw new Exception("User already registered");
+		}
+		users.add(user);
+	}
 }
 /*
  * 

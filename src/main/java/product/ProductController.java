@@ -1,5 +1,7 @@
 package product;
 
+import com.google.api.client.http.HttpStatusCodes;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -7,7 +9,6 @@ import spark.Spark;
 
 import utils.JsonUtil;
 import utils.Error;
-import utils.HTMLstatusCodes;
 
 public class ProductController {
 
@@ -17,7 +18,7 @@ public class ProductController {
 			@Override
 			public Object handle(Request request, Response response) {
 				response.type("application/json");
-				return ProductService.getAllProoducts();
+				return productService.getAllProoducts();
 			}
 		}, JsonUtil::toJson);
 
@@ -30,10 +31,10 @@ public class ProductController {
 					limit = checkParamInt(request.queryParams("limit"));
 					offset = checkParamInt(request.queryParams("offset"));
 				} catch (Exception e) {
-					response.status(HTMLstatusCodes.STATUS_GENERIC_ERROR);
+					response.status(HttpStatusCodes.STATUS_CODE_BAD_GATEWAY);
 					return new Error(e.getMessage());
 				}
-				return ProductService.getProducts(limit, offset);
+				return productService.getProducts(limit, offset);
 			}
 		}, JsonUtil::toJson);
 	}
