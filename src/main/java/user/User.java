@@ -34,11 +34,10 @@ public class User {
 		return productsCart;
 	}
 
-	public String addToCart(Product product) throws Exception {
-		if (productsCart.contains(product)) {
-			throw new Exception("Product already present in cart");
+	public String addToCart(Product product) {
+		if (!productsCart.contains(product)) {
+			productsCart.add(product);
 		}
-		productsCart.add(product);
 		return "Added to cart";
 	}
 

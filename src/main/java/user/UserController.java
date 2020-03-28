@@ -77,13 +77,17 @@ public class UserController {
 				User user;
 				int productID;
 				try {
-					user = checkUser(request.session().attribute("user"));
 					productID = checkProductID(request.queryParams("productID"));
-					return userService.addToCart(user, productID);
 				} catch (Exception e) {
 					response.status(HttpStatusCodes.STATUS_CODE_BAD_GATEWAY);
 					return new Error(e.getMessage());
 				}
+				user = request.session().attribute("user");
+				if (user == null) {
+					response.status(HttpStatusCodes.STATUS_CODE_UNAUTHORIZED);
+					return new Error("Unauthorized");
+				}
+				return userService.addToCart(user, productID);
 			}
 		}, JsonUtil::toJson);
 
@@ -92,25 +96,14 @@ public class UserController {
 			public Object handle(Request request, Response response) {
 				response.type("application/json");
 				User user;
-				try {
-					user = checkUser(request.session().attribute("user"));
-					return user;
-				} catch (Exception e) {
-					response.status(HttpStatusCodes.STATUS_CODE_BAD_GATEWAY);
-					return new Error(e.getMessage());
+				user = request.session().attribute("user");
+				if (user == null) {
+					response.status(HttpStatusCodes.STATUS_CODE_UNAUTHORIZED);
+					return new Error("Unauthorized");
 				}
+				return user;	
 			}
 		}, JsonUtil::toJson);
-	}
-
-	private User checkUser(User sessionAttr) throws Exception {
-		// You should store the users, and search them in a way in the future so that
-		// searching will be more efficient.
-		System.out.println(sessionAttr);
-		if ((sessionAttr != null) && DatabaseController.users.contains(sessionAttr)) {
-			return sessionAttr;
-		}
-		throw new Exception("Unauthorized");
 	}
 
 	private int checkProductID(String queryParam) throws Exception {

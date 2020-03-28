@@ -35,7 +35,7 @@ public class UserService {
 	 * @throws exception, if the product is already present in the user's cart
 	 * 
 	 */
-	public String addToCart(User user, int productID) throws Exception {
+	public String addToCart(User user, int productID) {
 		return user.addToCart(DatabaseController.getProductByID(productID));
 	}
 }
