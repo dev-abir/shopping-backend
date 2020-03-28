@@ -20,7 +20,6 @@ public class UserController {
 				response.type("application/json");
 				User userFromVerifier;
 				String idTokenString = request.queryParams("idTokenString");
-				System.out.println(idTokenString);
 				if (request.session().attribute("user") != null) { // Not quite sure if it throws nullpointer excp or
 																	// not...(it may be a redundant checking)
 					request.session().invalidate(); // If there is a session already present, invalidate it and create
@@ -36,14 +35,15 @@ public class UserController {
 					response.status(HttpStatusCodes.STATUS_CODE_SERVER_ERROR);
 					return new Error("Internal server error");
 				}
-				try {
-					userService.addUserToDatabase(userFromVerifier);
-				} catch (Exception e) {
+				/* TODO : Ensure that no need to check(an already registered user could log-in a thousand times)
+				String warning = "";
+				if ((userFromVerifier != null) && DatabaseController.users.contains(userFromVerifier)) {
 					response.status(HttpStatusCodes.STATUS_CODE_CONFLICT);
-					return new Error(e.getMessage());
-				}
+					warning = "Warning : User already registered, ";
+				}*/
 				request.session().attribute("user", userFromVerifier);
-				return "User signed-in";
+				userService.addUserToDatabase(userFromVerifier);
+				return (/*warning + */"User signed-in");
 			}
 		}, JsonUtil::toJson);
 
@@ -107,7 +107,7 @@ public class UserController {
 		// You should store the users, and search them in a way in the future so that
 		// searching will be more efficient.
 		System.out.println(sessionAttr);
-		if (DatabaseController.users.contains(sessionAttr) && (sessionAttr != null)) {
+		if ((sessionAttr != null) && DatabaseController.users.contains(sessionAttr)) {
 			return sessionAttr;
 		}
 		throw new Exception("Unauthorized");
@@ -118,13 +118,13 @@ public class UserController {
 		try {
 			result = Integer.parseInt(queryParam);
 		} catch (NumberFormatException e) {
-			throw new Exception("Query parameter must be a positive integer");
+			throw new Exception("Invalid query parameter! It must be a positive integer");
 		}
 		if (result < 0) {
 			throw new Exception("Invalid query parameter! It must be a positive integer");
 		}
 		if (result > DatabaseController.products.length) {
-			throw new Exception("Query parameter! must not exceed the total number of products in the database");
+			throw new Exception("Invalid query parameter! It must not exceed the total number of products in the database");
 		}
 		return result;
 	}

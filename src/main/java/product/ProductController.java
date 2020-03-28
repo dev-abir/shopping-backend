@@ -44,7 +44,7 @@ public class ProductController {
 		try {
 			result = Integer.parseInt(queryParam);
 		} catch (NumberFormatException e) {
-			throw new Exception("Query parameter must be a positive integer");
+			throw new Exception("Invalid query parameter! It must be a positive integer");
 		}
 		if (result < 0) {
 			throw new Exception("Invalid query parameter! It must be a positive integer");

@@ -86,12 +86,11 @@ public class DatabaseController {
 		return products[productID];
 	}
 
-	public static void addUser(User user) throws Exception {
+	public static void addUser(User user) {
 		// may use set instead of arraylist
-		if (users.contains(user)) {
-			throw new Exception("User already registered");
+		if (!users.contains(user)) {
+			users.add(user);
 		}
-		users.add(user);
 	}
 }
 /*

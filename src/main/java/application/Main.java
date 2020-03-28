@@ -1,19 +1,16 @@
 package application;
 
 import spark.Spark;
-import spark.debug.DebugScreen;
 import product.ProductController;
 import product.ProductService;
 import user.UserController;
 import user.UserService;
 
-public class Application {
+public class Main {
 	public static void main(String[] args) {
 
 		Spark.port(getHerokuAssignedPort());
-		Spark.staticFileLocation("/");
-
-		DebugScreen.enableDebugScreen();
+		Spark.staticFileLocation("/public");
 
 		/*
 		 * TODO : See if someone enters a trailing slash after the path like

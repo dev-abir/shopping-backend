@@ -12,7 +12,7 @@ public class UserService {
 	 * @throws exception, if the user is already registered
 	 * 
 	 */
-	public void addUserToDatabase(User user) throws Exception {
+	public void addUserToDatabase(User user) {
 		DatabaseController.addUser(user);
 	}
 
