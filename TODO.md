@@ -1,4 +1,8 @@
 # TODOS:
+
+(see [todos](https://github.com/dev-moss/shopping-backend/projects/1), from now I will add todos there)
+
+
 1. Use a *'real'* database.
 2. Add testing(may use JUnit, but as it is a REST API, I would like to use use selenium, or a JAVA alternative of selenium)
 3. Spark has some serious problems([see this](https://github.com/dev-moss/shopping-backend/blob/42180f4d1a83b437c6ca0539d0a9e190a2c855d1/src/main/java/application/Main.java#L30))
